@@ -19,7 +19,6 @@
 package com.pm;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import javax.servlet.ServletException;
 
@@ -28,7 +27,10 @@ import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.sling.SlingServlet;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
-import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
+import org.apache.sling.api.resource.ModifiableValueMap;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,28 +53,38 @@ import org.slf4j.LoggerFactory;
     @Property(name="service.vendor", value="The Apache Software Foundation")
 })
 @SuppressWarnings("serial")
-public class ByPathServlet extends SlingSafeMethodsServlet {
+public class ByPathServlet extends SlingAllMethodsServlet {
     
     private final Logger log = LoggerFactory.getLogger(ByPathServlet.class);
 
     @Override
-    protected void doGet(SlingHttpServletRequest request,
+    protected void doPost(SlingHttpServletRequest request,
             SlingHttpServletResponse response) throws ServletException,
             IOException {
-        
-        Writer w = response.getWriter();
-        w.write("<!DOCTYPE html PUBLIC \"-//IETF//DTD HTML 2.0//EN\">");
-        w.write("<html>");
-        w.write("<head>");
-        w.write("<title>Hello World Servlet</title>");
-        w.write("</head>");
-        w.write("<body>");
-        w.write("<h1>Hello World!</h1>");
-        w.write("</body>");
-        w.write("</html>");
-        
-        log.info("Hello World Servlet");
-        
+
+        String pagePath = request.getParameter("pagePath");
+        ResourceResolver resolver = request.getResourceResolver();
+        Resource pageResource = resolver.getResource(pagePath);
+        if (pageResource == null) {
+            log.debug("Page Resource is null.");
+            return;
+        }
+
+        String inputValue = request.getParameter("inputValue");
+        if (inputValue == null) {
+            log.debug("Input Value is empty.");
+            return;
+        }
+
+        ModifiableValueMap pageProperties = pageResource.adaptTo(ModifiableValueMap.class);
+        if (pageProperties == null) {
+            log.debug("properties not accessible - probably log in.");
+            return;
+        }
+        pageProperties.put("sampleValue", inputValue);
+        resolver.commit();
+
+        response.sendRedirect(request.getHeader("Referer"));
     }
 
 }
