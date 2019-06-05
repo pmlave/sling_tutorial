@@ -41,7 +41,8 @@ public class JsonViewerModel {
     }
 
     private boolean isFolder(Resource resource) {
-        return resource.getValueMap().get("jcr:primaryType", "").equals("sling:Folder");
+        return resource.getValueMap().get("jcr:primaryType", "").equals("sling:Folder") ||
+                resource.getValueMap().get("jcr:primaryType", "").equals("sling:OrderedFolder");
     }
 
     public ValueMap getProperties() {
