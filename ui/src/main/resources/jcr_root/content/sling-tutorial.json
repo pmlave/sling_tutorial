@@ -1,0 +1,5 @@
+{
+  "jcr:primaryType": "sling:Folder",
+  "sling:resourceType" : "pm/pages/page",
+  "title" : "Sling Tutorial"
+}
