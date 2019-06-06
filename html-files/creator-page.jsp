@@ -12,5 +12,10 @@
 
   <body>
     <sling:include path="creator" resourceType="paul/components/content-creator" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script src="/apps/paul/components/content-creator/content-creator.js"></script>
   </body>
 </html>
