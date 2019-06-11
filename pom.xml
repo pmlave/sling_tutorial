@@ -8,7 +8,7 @@
 
     <properties>
         <sling.host>localhost</sling.host>
-        <sling.port>8080</sling.port>
+        <sling.port>8081</sling.port>
         <sling.username>admin</sling.username>
         <sling.password>admin</sling.password>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
