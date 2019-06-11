@@ -31,6 +31,11 @@
                     </instructions>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.sling</groupId>
+                <artifactId>maven-sling-plugin</artifactId>
+                <version>2.1.2</version>
+            </plugin>
             <!--<plugin>-->
                 <!--<groupId>com.github.eirslett</groupId>-->
                 <!--<artifactId>frontend-maven-plugin</artifactId>-->
